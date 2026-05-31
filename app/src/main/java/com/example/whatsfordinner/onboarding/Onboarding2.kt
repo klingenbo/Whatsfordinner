@@ -1,4 +1,4 @@
-package com.example.whatsfordinner
+package com.example.whatsfordinner.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.whatsfordinner.OnboardingButton
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
@@ -64,18 +66,10 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
 
         Spacer(modifier = Modifier.height(100.dp))
 
-        FilledTonalButton(
-            onClick = { onContinueClicked() },
-            colors = ButtonDefaults.filledTonalButtonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
-        ) {
-            Text(
-                text = "Continue",
-                style = MaterialTheme.typography.headlineSmall
-            )
-        }
+        OnboardingButton(
+            text = "Continue",
+            onClick = { onContinueClicked() }
+        )
 
     }
 }
