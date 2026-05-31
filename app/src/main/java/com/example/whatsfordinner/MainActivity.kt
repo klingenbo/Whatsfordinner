@@ -42,7 +42,15 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("onboarding3") {
-                        Onboarding3()
+                        Onboarding3(
+                            onGetStartedClicked = {
+                                navController.navigate("recipeList")
+                            }
+                        )
+                    }
+
+                    composable("recipeList") {
+                        RecipeList()
                     }
                 }
             }

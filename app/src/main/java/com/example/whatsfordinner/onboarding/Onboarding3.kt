@@ -24,7 +24,9 @@ import com.example.whatsfordinner.R
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
-fun Onboarding3() {
+fun Onboarding3(
+    onGetStartedClicked: () -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -68,7 +70,7 @@ fun Onboarding3() {
 
         OnboardingButton(
             text = "Get Started",
-            onClick = { }
+            onClick = { onGetStartedClicked() }
         )
 
     }
