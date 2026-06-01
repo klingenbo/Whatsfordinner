@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.whatsfordinner.OnboardingButton
 import com.example.whatsfordinner.R
 import com.example.whatsfordinner.ui.theme.Sage50
+import com.example.whatsfordinner.ui.theme.Sage500
 
 @Composable
 fun Onboarding3(
@@ -31,7 +32,7 @@ fun Onboarding3(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp, 30.dp)
+            .padding(0.dp, 30.dp)
             .background(Sage50),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -41,7 +42,8 @@ fun Onboarding3(
 
         Image(
             painter = painterResource(R.drawable.cooking),
-            contentDescription = "Casserole"
+            contentDescription = "Casserole",
+            modifier = Modifier.padding(20.dp, 0.dp)
         )
 
         Spacer(modifier = Modifier.height(80.dp))
@@ -49,7 +51,8 @@ fun Onboarding3(
         Text(
             text = "Never wonder what's for dinner",
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displaySmall
         )
@@ -61,7 +64,8 @@ fun Onboarding3(
                     "pick a recipe for you when you\n" +
                     "can't decide.",
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall
         )

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.whatsfordinner.OnboardingButton
 import com.example.whatsfordinner.R
 import com.example.whatsfordinner.ui.theme.Sage50
+import com.example.whatsfordinner.ui.theme.Sage500
 
 @Composable
 fun Onboarding2(onContinueClicked: () -> Unit) {
@@ -29,7 +30,7 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp, 30.dp)
+            .padding(0.dp, 30.dp)
             .background(Sage50),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -39,7 +40,8 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
 
         Image(
             painter = painterResource(R.drawable.favorite_icon),
-            contentDescription = "Bookmark"
+            contentDescription = "Bookmark",
+            modifier = Modifier.padding(20.dp, 0.dp)
         )
 
         Spacer(modifier = Modifier.height(80.dp))
@@ -47,7 +49,8 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
         Text(
             text = "Save your favorites",
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displaySmall
         )
@@ -59,7 +62,8 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
                     "in one place and access them\n" +
                     "whenever you need inspiration",
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(20.dp, 0.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall
         )
