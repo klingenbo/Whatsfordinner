@@ -12,11 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,16 +33,27 @@ import androidx.compose.ui.unit.dp
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
-fun RecipeList(
+fun RecipeListScreen(
     viewModel: RecipesListViewModel
 ) {
 
-    val recipeList by viewModel.recipeList.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
+    when (uiState) {
+        RecipesUiState.Loading -> CircularProgressIndicator()
+        RecipesUiState.Error -> RecipeListError()
+        is RecipesUiState.Success -> {
+            RecipeListContent(recipes = (uiState as RecipesUiState.Success).recipes)
+        }
+    }
+}
+
+
+@Composable
+fun RecipeListContent(recipes: List<Recipe>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-
             .background(Sage50),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -63,7 +75,7 @@ fun RecipeList(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(recipeList) { recipe ->
+            items(recipes) { recipe ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -110,7 +122,6 @@ fun RecipeList(
                     )
                 }
             }
-
 
         }
     }

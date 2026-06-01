@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
 
                         val viewModel: RecipesListViewModel = viewModel()
 
-                        RecipeList(
+                        RecipeListScreen(
                             viewModel = viewModel
                         )
                     }
