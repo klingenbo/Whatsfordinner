@@ -10,10 +10,26 @@ data class Recipe(
     val image: Int
 )
 
+sealed class RecipesUiState {
+    object Loading : RecipesUiState()
+    data class Success(val recipes: List<Recipe>) : RecipesUiState()
+    object Error : RecipesUiState()
+}
+
 class RecipesListViewModel : ViewModel() {
 
-    private val _recipeList = MutableStateFlow(dummyData())
-    val recipeList: StateFlow<List<Recipe>> = _recipeList
+    private val _uiState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
+    val uiState: StateFlow<RecipesUiState> = _uiState
+
+    init {
+        val randomError = (0..1).random()
+
+        if (randomError == 0) {
+            _uiState.value = RecipesUiState.Success(dummyData())
+        } else {
+            _uiState.value = RecipesUiState.Error
+        }
+    }
 
     fun dummyData(): List<Recipe> {
         val recipe = listOf(
