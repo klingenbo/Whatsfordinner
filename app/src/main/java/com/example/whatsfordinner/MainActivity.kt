@@ -19,6 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WhatsForDinnerTheme {
+                val viewModel: RecipesListViewModel = viewModel()
+
                 val navController = rememberNavController()
 
                 NavHost(
@@ -52,18 +54,20 @@ class MainActivity : ComponentActivity() {
 
                     composable("recipeList") {
 
-                        val viewModel: RecipesListViewModel = viewModel()
-
                         RecipeListScreen(
                             viewModel = viewModel,
-                            onDetailsClicked = {
+                            onDetailsClicked = { recipe ->
+                                viewModel.setSelectedRecipe(recipe)
                                 navController.navigate("recipeDetails")
                             }
                         )
                     }
 
                     composable("recipeDetails") {
-                        RecipeDetails()
+
+                        RecipeDetails(
+                            viewModel = viewModel
+                        )
                     }
                 }
             }

@@ -39,7 +39,7 @@ import com.example.whatsfordinner.ui.theme.Sage50
 @Composable
 fun RecipeListScreen(
     viewModel: RecipesListViewModel,
-    onDetailsClicked: () -> Unit
+    onDetailsClicked: (Recipe) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -76,7 +76,7 @@ fun ProgressIndicator() {
 @Composable
 fun RecipeListContent(
     recipes: List<Recipe>,
-    onDetailsClicked: () -> Unit
+    onDetailsClicked: (Recipe) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -141,7 +141,8 @@ fun RecipeListContent(
                             overflow = TextOverflow.Ellipsis
                         )
 
-                        IconButton(onClick = onDetailsClicked) {
+                        IconButton(onClick = { onDetailsClicked(recipe) })
+                        {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                                 contentDescription = "Arrow forward"

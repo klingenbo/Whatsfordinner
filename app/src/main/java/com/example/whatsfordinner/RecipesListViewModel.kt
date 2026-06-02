@@ -24,6 +24,9 @@ class RecipesListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
     val uiState: StateFlow<RecipesUiState> = _uiState
 
+    private val _selectedRecipe = MutableStateFlow<Recipe?>(null)
+    val selectedRecipe = _selectedRecipe
+
     init {
         fetchRecipes()
     }
@@ -37,5 +40,9 @@ class RecipesListViewModel : ViewModel() {
                 _uiState.value = RecipesUiState.Error
             }
         }
+    }
+
+    fun setSelectedRecipe(recipe: Recipe) {
+        _selectedRecipe.value = recipe
     }
 }
