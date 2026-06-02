@@ -1,6 +1,5 @@
 package com.example.whatsfordinner
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,9 +14,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,9 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -36,23 +37,31 @@ import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun RecipeListScreen(
-    viewModel: RecipesListViewModel
+    viewModel: RecipesListViewModel,
+    onDetailsClicked: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
 
     when (uiState) {
         RecipesUiState.Loading -> CircularProgressIndicator()
+                // Create Loading screen with progress indicator centered
         RecipesUiState.Error -> RecipeListError()
         is RecipesUiState.Success -> {
-            RecipeListContent((uiState as RecipesUiState.Success).recipes)
+
+            val recipes = (uiState as RecipesUiState.Success).recipes
+
+            RecipeListContent(
+                recipes = recipes,
+                onDetailsClicked = onDetailsClicked)
         }
     }
 }
 
-
 @Composable
-fun RecipeListContent(recipes: List<Recipe>) {
+fun RecipeListContent(
+    recipes: List<Recipe>,
+    onDetailsClicked: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +77,7 @@ fun RecipeListContent(recipes: List<Recipe>) {
             style = MaterialTheme.typography.displaySmall,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp, 20.dp, 0.dp, 0.dp),
+                .padding(top = 20.dp),
             textAlign = TextAlign.Center
         )
 
@@ -91,25 +100,38 @@ fun RecipeListContent(recipes: List<Recipe>) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
                         AsyncImage(
                             model = recipe.image,
                             contentDescription = recipe.name,
                             modifier = Modifier
-                                .padding(20.dp, 10.dp, 0.dp, 10.dp)
+                                .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
                                 .width(80.dp)
                                 .height(80.dp),
                             contentScale = ContentScale.Crop
                         )
 
+                        // Fix alignment
                         Text(
                             text = recipe.name,
-                            textAlign = TextAlign.Right,
+                            textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(20.dp)
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(horizontal = 16.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
+
+                        IconButton(onClick = onDetailsClicked) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                contentDescription = "Arrow forward"
+                            )
+                        }
                     }
 
                     Text(
