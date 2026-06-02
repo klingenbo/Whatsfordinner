@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.whatsfordinner.onboarding.Onboarding1
 import com.example.whatsfordinner.onboarding.Onboarding2
 import com.example.whatsfordinner.onboarding.Onboarding3
+import com.example.whatsfordinner.screens.RecipeDetails
+import com.example.whatsfordinner.screens.RecipeListScreen
 import com.example.whatsfordinner.ui.theme.WhatsForDinnerTheme
 
 class MainActivity : ComponentActivity() {

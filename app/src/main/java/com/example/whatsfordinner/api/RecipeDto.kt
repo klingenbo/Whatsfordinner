@@ -1,4 +1,4 @@
-package com.example.whatsfordinner
+package com.example.whatsfordinner.api
 
 data class RecipeResponseDto(
     val meals: List<RecipeDto>

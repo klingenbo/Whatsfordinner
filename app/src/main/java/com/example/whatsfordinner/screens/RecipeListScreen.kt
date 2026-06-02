@@ -1,4 +1,4 @@
-package com.example.whatsfordinner
+package com.example.whatsfordinner.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.whatsfordinner.Recipe
+import com.example.whatsfordinner.RecipesListViewModel
+import com.example.whatsfordinner.RecipesUiState
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
