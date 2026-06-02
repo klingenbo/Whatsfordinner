@@ -22,6 +22,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -44,8 +45,7 @@ fun RecipeListScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     when (uiState) {
-        RecipesUiState.Loading -> CircularProgressIndicator()
-                // Create Loading screen with progress indicator centered
+        RecipesUiState.Loading -> ProgressIndicator()
         RecipesUiState.Error -> RecipeListError()
         is RecipesUiState.Success -> {
 
@@ -53,15 +53,31 @@ fun RecipeListScreen(
 
             RecipeListContent(
                 recipes = recipes,
-                onDetailsClicked = onDetailsClicked)
+                onDetailsClicked = onDetailsClicked
+            )
         }
+    }
+}
+
+@Composable
+fun ProgressIndicator() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CircularProgressIndicator(
+            color = ProgressIndicatorDefaults.circularColor
+        )
     }
 }
 
 @Composable
 fun RecipeListContent(
     recipes: List<Recipe>,
-    onDetailsClicked: () -> Unit) {
+    onDetailsClicked: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -114,7 +130,6 @@ fun RecipeListContent(
                             contentScale = ContentScale.Crop
                         )
 
-                        // Fix alignment
                         Text(
                             text = recipe.name,
                             textAlign = TextAlign.Center,
