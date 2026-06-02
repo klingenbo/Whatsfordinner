@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,46 +22,57 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.whatsfordinner.RecipesListViewModel
+import com.example.whatsfordinner.components.TopBar
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun RecipeDetails(
-    viewModel: RecipesListViewModel
+    viewModel: RecipesListViewModel,
+    onBackClicked: () -> Unit
 ) {
+    Scaffold(
+        topBar = {
+            TopBar(
+            onBack = onBackClicked
+            )
+        }
+    ) { innerPadding ->
 
-    val recipe by viewModel.selectedRecipe.collectAsState()
+        val recipe by viewModel.selectedRecipe.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(Sage50),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Spacer(modifier = Modifier.height(80.dp))
-
-        AsyncImage(
-            model = recipe?.image ?: "N/A",
-            contentDescription = recipe?.name ?: "No Titel",
+        Column(
             modifier = Modifier
-                .height(200.dp)
-                .width(200.dp),
-            contentScale = ContentScale.Crop
-        )
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(Sage50)
+                .padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        Text(
-            text = recipe?.name ?: "",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 40.dp)
-        )
+            Spacer(modifier = Modifier.height(80.dp))
 
-        Text(
-            text = recipe?.details ?: "",
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Left,
-            modifier = Modifier.padding(vertical = 30.dp, horizontal = 30.dp)
-        )
+            AsyncImage(
+                model = recipe?.image ?: "N/A",
+                contentDescription = recipe?.name ?: "No Titel",
+                modifier = Modifier
+                    .height(200.dp)
+                    .width(200.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            Text(
+                text = recipe?.name ?: "",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 40.dp)
+            )
+
+            Text(
+                text = recipe?.details ?: "",
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Left,
+                modifier = Modifier.padding(vertical = 30.dp, horizontal = 30.dp)
+            )
+        }
     }
 }

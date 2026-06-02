@@ -1,5 +1,7 @@
 package com.example.whatsfordinner.api
 
+import com.example.whatsfordinner.Recipe
+
 data class RecipeResponseDto(
     val meals: List<RecipeDto>
 )

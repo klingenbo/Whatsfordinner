@@ -68,7 +68,10 @@ class MainActivity : ComponentActivity() {
                     composable("recipeDetails") {
 
                         RecipeDetails(
-                            viewModel = viewModel
+                            viewModel = viewModel,
+                            onBackClicked = {
+                                navController.popBackStack()
+                            }
                         )
                     }
                 }
