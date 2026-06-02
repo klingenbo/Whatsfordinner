@@ -55,8 +55,15 @@ class MainActivity : ComponentActivity() {
                         val viewModel: RecipesListViewModel = viewModel()
 
                         RecipeListScreen(
-                            viewModel = viewModel
+                            viewModel = viewModel,
+                            onDetailsClicked = {
+                                navController.navigate("recipeDetails")
+                            }
                         )
+                    }
+
+                    composable("recipeDetails") {
+                        RecipeDetails()
                     }
                 }
             }
