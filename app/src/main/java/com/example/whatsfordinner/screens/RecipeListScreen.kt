@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +38,7 @@ import coil.compose.AsyncImage
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
 import com.example.whatsfordinner.RecipesUiState
+import com.example.whatsfordinner.components.TopBar
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
@@ -49,7 +51,11 @@ fun RecipeListScreen(
 
     when (uiState) {
         RecipesUiState.Loading -> ProgressIndicator()
-        RecipesUiState.Error -> RecipeListError()
+        RecipesUiState.Error -> RecipeListError(
+            onRetryClicked = {
+                viewModel.fetchRecipes()
+            }
+        )
         is RecipesUiState.Success -> {
 
             val recipes = (uiState as RecipesUiState.Success).recipes
@@ -81,10 +87,18 @@ fun RecipeListContent(
     recipes: List<Recipe>,
     onDetailsClicked: (Recipe) -> Unit
 ) {
+
+    Scaffold(
+        topBar = {
+            TopBar()
+        }
+    ) { innerPadding ->
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Sage50),
+            .background(Sage50)
+        .padding(innerPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -164,7 +178,7 @@ fun RecipeListContent(
                     )
                 }
             }
-
+        }
         }
     }
 }

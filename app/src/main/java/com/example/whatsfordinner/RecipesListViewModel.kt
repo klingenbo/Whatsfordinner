@@ -32,7 +32,7 @@ class RecipesListViewModel : ViewModel() {
         fetchRecipes()
     }
 
-    private fun fetchRecipes() {
+    fun fetchRecipes() {
         viewModelScope.launch {
             try {
                 val recipes = repository.getRecipes()
