@@ -29,7 +29,6 @@ fun Onboarding3(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(0.dp, 30.dp)
             .background(Sage50),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

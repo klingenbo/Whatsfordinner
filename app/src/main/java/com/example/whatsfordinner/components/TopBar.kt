@@ -1,5 +1,6 @@
 package com.example.whatsfordinner.components
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -17,6 +18,7 @@ fun TopBar(
     onBack: (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(
+        windowInsets = WindowInsets(0, 0, 0, 0),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary
