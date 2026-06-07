@@ -50,7 +50,7 @@ fun RecipeListScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     when (uiState) {
-        RecipesUiState.Loading -> ProgressIndicator()
+        RecipesUiState.Loading -> RecipeListProgressIndicator()
         RecipesUiState.Error -> RecipeListError(
             onRetryClicked = {
                 viewModel.fetchRecipes()
@@ -70,7 +70,7 @@ fun RecipeListScreen(
 }
 
 @Composable
-fun ProgressIndicator() {
+fun RecipeListProgressIndicator() {
     Column(
         modifier = Modifier
             .fillMaxSize(),

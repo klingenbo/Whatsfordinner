@@ -17,8 +17,8 @@ import com.example.whatsfordinner.components.BottomNavBar
 import com.example.whatsfordinner.onboarding.Onboarding1
 import com.example.whatsfordinner.onboarding.Onboarding2
 import com.example.whatsfordinner.onboarding.Onboarding3
-import com.example.whatsfordinner.screens.FavoritesScreen
-import com.example.whatsfordinner.screens.MealPlanScreen
+import com.example.whatsfordinner.screens.FavoritesListScreen
+import com.example.whatsfordinner.screens.MealPlanListScreen
 import com.example.whatsfordinner.screens.RecipeDetails
 import com.example.whatsfordinner.screens.RecipeListScreen
 import com.example.whatsfordinner.ui.theme.WhatsForDinnerTheme
@@ -85,8 +85,25 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable("favorites") { FavoritesScreen() }
-                        composable("meal_plan") { MealPlanScreen() }
+                        composable("favorites") {
+                            FavoritesListScreen(
+                                viewModel = viewModel,
+                                onDetailsClicked = { recipe ->
+                                    viewModel.setSelectedRecipe(recipe)
+                                    navController.navigate("recipeDetails")
+                                }
+                            )
+                        }
+
+                        composable("meal_plan") {
+                            MealPlanListScreen(
+                                viewModel = viewModel,
+                                onDetailsClicked = { recipe ->
+                                    viewModel.setSelectedRecipe(recipe)
+                                    navController.navigate("recipeDetails")
+                                }
+                            )
+                        }
 
                         composable("recipeDetails") {
 
@@ -102,4 +119,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    }
+}
