@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.squareup.moshi)

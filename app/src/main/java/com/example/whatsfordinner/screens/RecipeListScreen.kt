@@ -56,6 +56,7 @@ fun RecipeListScreen(
                 viewModel.fetchRecipes()
             }
         )
+
         is RecipesUiState.Success -> {
 
             val recipes = (uiState as RecipesUiState.Success).recipes
@@ -94,91 +95,91 @@ fun RecipeListContent(
         }
     ) { innerPadding ->
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Sage50)
-        .padding(innerPadding),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = "Recipes",
-            style = MaterialTheme.typography.displaySmall,
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            textAlign = TextAlign.Center
-        )
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(1),
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .fillMaxSize()
+                .background(Sage50)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(recipes) { recipe ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Sage50)
-                        .padding(20.dp, 20.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.background
-                    )
-                ) {
-                    Row(
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "Recipes",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                textAlign = TextAlign.Center
+            )
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(recipes) { recipe ->
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.primaryContainer),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        AsyncImage(
-                            model = recipe.image,
-                            contentDescription = recipe.name,
-                            modifier = Modifier
-                                .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
-                                .width(80.dp)
-                                .height(80.dp),
-                            contentScale = ContentScale.Crop
+                            .background(Sage50)
+                            .padding(20.dp, 20.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.background
                         )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.primaryContainer),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            AsyncImage(
+                                model = recipe.image,
+                                contentDescription = recipe.name,
+                                modifier = Modifier
+                                    .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
+                                    .width(80.dp)
+                                    .height(80.dp),
+                                contentScale = ContentScale.Crop
+                            )
+
+                            Text(
+                                text = recipe.name,
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(horizontal = 16.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+
+                            IconButton(onClick = { onDetailsClicked(recipe) })
+                            {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                    contentDescription = "Arrow forward"
+                                )
+                            }
+                        }
 
                         Text(
-                            text = recipe.name,
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyLarge,
+                            text = recipe.details,
+                            textAlign = TextAlign.Left,
+                            style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier
-                                .weight(1f)
-                                .padding(horizontal = 16.dp),
-                            maxLines = 1,
+                                .padding(20.dp),
+                            maxLines = 2,
                             overflow = TextOverflow.Ellipsis
                         )
-
-                        IconButton(onClick = { onDetailsClicked(recipe) })
-                        {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                contentDescription = "Arrow forward"
-                            )
-                        }
                     }
-
-                    Text(
-                        text = recipe.details,
-                        textAlign = TextAlign.Left,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier
-                            .padding(20.dp),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
                 }
             }
-        }
         }
     }
 }
