@@ -22,8 +22,8 @@ fun FavoritesIcon(
         ),
         contentDescription = "Star",
         modifier = Modifier
-            .width(40.dp)
-            .height(40.dp)
+            .width(30.dp)
+            .height(30.dp)
             .padding(end = 8.dp)
     )
 }

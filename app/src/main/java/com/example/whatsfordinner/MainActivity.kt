@@ -35,7 +35,13 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = currentBackStack?.destination?.route
 
                 // Screen where bottom bar will be shown
-                val showBottomBar = currentRoute in listOf("recipes", "favorites", "meal_plan")
+                val showBottomBar = currentRoute in listOf(
+                    "recipes",
+                    "favorites",
+                    "meal_plan",
+                    "recipeDetails",
+                    "recipeListError"
+                )
 
                 Scaffold(
                     bottomBar = {
@@ -46,33 +52,33 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "onboarding1",
+                        startDestination = "recipes"/* "onboarding1"*/,
                         modifier = Modifier.padding(innerPadding)
                     ) {
 
-                        composable("onboarding1") {
-                            Onboarding1(
-                                onContinueClicked = {
-                                    navController.navigate("onboarding2")
-                                }
-                            )
-                        }
+                        /* composable("onboarding1") {
+                             Onboarding1(
+                                 onContinueClicked = {
+                                     navController.navigate("onboarding2")
+                                 }
+                             )
+                         }
 
-                        composable("onboarding2") {
-                            Onboarding2(
-                                onContinueClicked = {
-                                    navController.navigate("onboarding3")
-                                }
-                            )
-                        }
+                         composable("onboarding2") {
+                             Onboarding2(
+                                 onContinueClicked = {
+                                     navController.navigate("onboarding3")
+                                 }
+                             )
+                         }
 
-                        composable("onboarding3") {
-                            Onboarding3(
-                                onGetStartedClicked = {
-                                    navController.navigate("recipes")
-                                }
-                            )
-                        }
+                         composable("onboarding3") {
+                             Onboarding3(
+                                 onGetStartedClicked = {
+                                     navController.navigate("recipes")
+                                 }
+                             )
+                         } */
 
                         composable("recipes") {
 
@@ -81,7 +87,9 @@ class MainActivity : ComponentActivity() {
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                }
+                                },
+                                onStarClicked = { },
+                                onMealPlanClicked = { }
                             )
                         }
 
@@ -91,7 +99,9 @@ class MainActivity : ComponentActivity() {
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                }
+                                },
+                                onStarClicked = { },
+                                onMealPlanClicked = { }
                             )
                         }
 
@@ -101,7 +111,9 @@ class MainActivity : ComponentActivity() {
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                }
+                                },
+                                onStarClicked = { },
+                                onMealPlanClicked = { }
                             )
                         }
 
@@ -111,7 +123,9 @@ class MainActivity : ComponentActivity() {
                                 viewModel = viewModel,
                                 onBackClicked = {
                                     navController.popBackStack()
-                                }
+                                },
+                                onStarClicked = { },
+                                onMealPlanClicked = { }
                             )
                         }
                     }

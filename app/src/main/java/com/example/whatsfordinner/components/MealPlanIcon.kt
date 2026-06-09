@@ -21,7 +21,7 @@ fun MealPlanIcon(
         ),
         contentDescription = "Outlined meal plan",
         modifier = Modifier
-            .width(40.dp)
-            .height(40.dp)
+            .width(30.dp)
+            .height(30.dp)
     )
 }

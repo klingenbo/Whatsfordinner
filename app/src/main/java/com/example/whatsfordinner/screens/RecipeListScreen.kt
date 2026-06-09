@@ -28,23 +28,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
 import com.example.whatsfordinner.RecipesUiState
+import com.example.whatsfordinner.components.FavoritesIcon
+import com.example.whatsfordinner.components.MealPlanIcon
 import com.example.whatsfordinner.components.TopBar
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun RecipeListScreen(
     viewModel: RecipesListViewModel,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onStarClicked: () -> Unit,
+    onMealPlanClicked: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -63,7 +72,9 @@ fun RecipeListScreen(
 
             RecipeListContent(
                 recipes = recipes,
-                onDetailsClicked = onDetailsClicked
+                onDetailsClicked = onDetailsClicked,
+                onStarClicked = onStarClicked,
+                onMealPlanClicked = onMealPlanClicked
             )
         }
     }
@@ -86,7 +97,9 @@ fun RecipeListProgressIndicator() {
 @Composable
 fun RecipeListContent(
     recipes: List<Recipe>,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onStarClicked: () -> Unit,
+    onMealPlanClicked: () -> Unit
 ) {
 
     Scaffold(
@@ -94,6 +107,9 @@ fun RecipeListContent(
             TopBar()
         }
     ) { innerPadding ->
+
+        var isFavorite by remember { mutableStateOf(false) }
+        var isInMealPlan by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -125,7 +141,7 @@ fun RecipeListContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Sage50)
-                            .padding(20.dp, 20.dp),
+                            .padding(20.dp, 5.dp),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.background
@@ -142,41 +158,65 @@ fun RecipeListContent(
                                 model = recipe.image,
                                 contentDescription = recipe.name,
                                 modifier = Modifier
-                                    .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
-                                    .width(80.dp)
-                                    .height(80.dp),
+                                    .padding(start = 20.dp, top = 8.dp, bottom = 8.dp)
+                                    .width(50.dp)
+                                    .height(50.dp),
                                 contentScale = ContentScale.Crop
                             )
 
-                            Text(
-                                text = recipe.name,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyLarge,
+                            Column(
                                 modifier = Modifier
                                     .weight(1f)
-                                    .padding(horizontal = 16.dp),
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                                    .padding(start = 8.dp),
+                                verticalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
 
-                            IconButton(onClick = { onDetailsClicked(recipe) })
-                            {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = "Arrow forward"
-                                )
+                                    Text(
+                                        text = recipe.name,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .padding(horizontal = 16.dp),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+
+                                    IconButton(onClick = { onDetailsClicked(recipe) })
+                                    {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                                            contentDescription = "Arrow forward"
+                                        )
+                                    }
+                                }
+
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 12.dp)
+                                        .background(MaterialTheme.colorScheme.primaryContainer),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    FavoritesIcon(
+                                        isFavorite = isFavorite,
+                                        onStarClicked = { isFavorite = !isFavorite }
+                                    )
+
+                                    Spacer(modifier = Modifier.width(60.dp))
+
+                                    MealPlanIcon(
+                                        isInMealPlan = isInMealPlan,
+                                        onMealPlanClicked = { isInMealPlan = !isInMealPlan }
+                                    )
+                                }
                             }
                         }
-
-                        Text(
-                            text = recipe.details,
-                            textAlign = TextAlign.Left,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier
-                                .padding(20.dp),
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis
-                        )
                     }
                 }
             }
