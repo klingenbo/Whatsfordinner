@@ -1,6 +1,7 @@
 package com.example.whatsfordinner.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,5 +24,6 @@ fun MealPlanIcon(
         modifier = Modifier
             .width(30.dp)
             .height(30.dp)
+            .clickable { onMealPlanClicked() }
     )
 }
