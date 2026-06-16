@@ -43,6 +43,7 @@ import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
 import com.example.whatsfordinner.RecipesUiState
+import com.example.whatsfordinner.SavedRecipesViewModel
 import com.example.whatsfordinner.components.FavoritesIcon
 import com.example.whatsfordinner.components.MealPlanIcon
 import com.example.whatsfordinner.components.TopBar
@@ -51,9 +52,8 @@ import com.example.whatsfordinner.ui.theme.Sage50
 @Composable
 fun RecipeListScreen(
     viewModel: RecipesListViewModel,
-    onDetailsClicked: (Recipe) -> Unit,
-    onStarClicked: () -> Unit,
-    onMealPlanClicked: () -> Unit
+    savedViewModel: SavedRecipesViewModel,
+    onDetailsClicked: (Recipe) -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -73,8 +73,7 @@ fun RecipeListScreen(
             RecipeListContent(
                 recipes = recipes,
                 onDetailsClicked = onDetailsClicked,
-                onStarClicked = onStarClicked,
-                onMealPlanClicked = onMealPlanClicked
+                savedViewModel = savedViewModel,
             )
         }
     }
@@ -97,9 +96,8 @@ fun RecipeListProgressIndicator() {
 @Composable
 fun RecipeListContent(
     recipes: List<Recipe>,
-    onDetailsClicked: (Recipe) -> Unit,
-    onStarClicked: () -> Unit,
-    onMealPlanClicked: () -> Unit
+    savedViewModel: SavedRecipesViewModel,
+    onDetailsClicked: (Recipe) -> Unit
 ) {
 
     Scaffold(
@@ -108,8 +106,8 @@ fun RecipeListContent(
         }
     ) { innerPadding ->
 
-        var isFavorite by remember { mutableStateOf(false) }
-        var isInMealPlan by remember { mutableStateOf(false) }
+        val favorites by savedViewModel.favorites.collectAsState()
+        val mealPlan by savedViewModel.mealPlan.collectAsState()
 
         Column(
             modifier = Modifier
@@ -137,6 +135,9 @@ fun RecipeListContent(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(recipes) { recipe ->
+                    val isFavorite = favorites.any { it.id == recipe.id }
+                    val isInMealPlan = mealPlan.any { it.id == recipe.id }
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -205,14 +206,14 @@ fun RecipeListContent(
                                 ) {
                                     FavoritesIcon(
                                         isFavorite = isFavorite,
-                                        onStarClicked = { isFavorite = !isFavorite }
+                                        onStarClicked = { savedViewModel.toggleFavorite(recipe) }
                                     )
 
                                     Spacer(modifier = Modifier.width(60.dp))
 
                                     MealPlanIcon(
                                         isInMealPlan = isInMealPlan,
-                                        onMealPlanClicked = { isInMealPlan = !isInMealPlan }
+                                        onMealPlanClicked = { savedViewModel.toggleMealPlan(recipe) }
                                     )
                                 }
                             }

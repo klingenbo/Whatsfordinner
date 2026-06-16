@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +31,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             WhatsForDinnerTheme {
                 val viewModel: RecipesListViewModel = viewModel()
+                val savedViewModel: SavedRecipesViewModel = ViewModelProvider(
+                    this,
+                    ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+                ).get(SavedRecipesViewModel::class.java)
                 val navController = rememberNavController()
                 val currentBackStack by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStack?.destination?.route
@@ -84,36 +89,33 @@ class MainActivity : ComponentActivity() {
 
                             RecipeListScreen(
                                 viewModel = viewModel,
+                                savedViewModel = savedViewModel,
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                },
-                                onStarClicked = { },
-                                onMealPlanClicked = { }
+                                }
                             )
                         }
 
                         composable("favorites") {
                             FavoritesListScreen(
                                 viewModel = viewModel,
+                                savedViewModel = savedViewModel,
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                },
-                                onStarClicked = { },
-                                onMealPlanClicked = { }
+                                }
                             )
                         }
 
                         composable("meal_plan") {
                             MealPlanListScreen(
                                 viewModel = viewModel,
+                                savedViewModel = savedViewModel,
                                 onDetailsClicked = { recipe ->
                                     viewModel.setSelectedRecipe(recipe)
                                     navController.navigate("recipeDetails")
-                                },
-                                onStarClicked = { },
-                                onMealPlanClicked = { }
+                                }
                             )
                         }
 
@@ -121,11 +123,10 @@ class MainActivity : ComponentActivity() {
 
                             RecipeDetails(
                                 viewModel = viewModel,
+                                savedViewModel = savedViewModel,
                                 onBackClicked = {
                                     navController.popBackStack()
-                                },
-                                onStarClicked = { },
-                                onMealPlanClicked = { }
+                                }
                             )
                         }
                     }

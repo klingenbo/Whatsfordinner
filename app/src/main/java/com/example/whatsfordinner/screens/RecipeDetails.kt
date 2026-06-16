@@ -1,6 +1,5 @@
 package com.example.whatsfordinner.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,12 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.whatsfordinner.R
 import com.example.whatsfordinner.RecipesListViewModel
+import com.example.whatsfordinner.SavedRecipesViewModel
 import com.example.whatsfordinner.components.FavoritesIcon
 import com.example.whatsfordinner.components.MealPlanIcon
 import com.example.whatsfordinner.components.TopBar
@@ -40,8 +38,7 @@ import com.example.whatsfordinner.ui.theme.Sage50
 fun RecipeDetails(
     viewModel: RecipesListViewModel,
     onBackClicked: () -> Unit,
-    onStarClicked: () -> Unit,
-    onMealPlanClicked: () -> Unit
+    savedViewModel: SavedRecipesViewModel
 ) {
     Scaffold(
         topBar = {
@@ -52,8 +49,9 @@ fun RecipeDetails(
     ) { innerPadding ->
 
         val recipe by viewModel.selectedRecipe.collectAsState()
-        var isFavorite by remember { mutableStateOf(false) }
-        var isInMealPlan by remember { mutableStateOf(false) }
+        val currentRecipe = recipe ?: return@Scaffold
+        val favorites by savedViewModel.favorites.collectAsState()
+        val mealPlan by savedViewModel.mealPlan.collectAsState()
 
         Column(
             modifier = Modifier
@@ -63,12 +61,14 @@ fun RecipeDetails(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val isFavorite = favorites.any { it.id == recipe?.id }
+            val isInMealPlan = mealPlan.any { it.id == recipe?.id }
 
             Spacer(modifier = Modifier.height(80.dp))
 
             AsyncImage(
                 model = recipe?.image ?: "N/A",
-                contentDescription = recipe?.name ?: "No Titel",
+                contentDescription = recipe?.name ?: "No image",
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp),
@@ -76,7 +76,7 @@ fun RecipeDetails(
             )
 
             Text(
-                text = recipe?.name ?: "",
+                text = recipe?.name ?: "No title",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 40.dp)
@@ -91,14 +91,14 @@ fun RecipeDetails(
             ) {
                 FavoritesIcon(
                     isFavorite = isFavorite,
-                    onStarClicked = { isFavorite = !isFavorite }
+                    onStarClicked = { savedViewModel.toggleFavorite(currentRecipe) }
                 )
 
                 Spacer(modifier = Modifier.width(40.dp))
 
                 MealPlanIcon(
                     isInMealPlan = isInMealPlan,
-                    onMealPlanClicked = { isInMealPlan = !isInMealPlan }
+                    onMealPlanClicked = { savedViewModel.toggleMealPlan(currentRecipe) }
                 )
             }
 
