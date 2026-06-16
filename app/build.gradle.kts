@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -37,6 +39,13 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
 }
 
 dependencies {
@@ -59,6 +68,9 @@ dependencies {
     implementation(libs.squareup.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.coil.compose)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
