@@ -6,11 +6,13 @@ import com.example.whatsfordinner.api.repository.RecipeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 data class Recipe(
     val name: String,
     val details: String,
-    val image: String
+    val image: String,
+    val id: String = UUID.randomUUID().toString()
 )
 
 sealed class RecipesUiState {
