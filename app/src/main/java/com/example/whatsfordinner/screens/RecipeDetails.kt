@@ -57,8 +57,8 @@ fun RecipeDetails(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val isFavorite = favorites.any { it.id == recipe?.id }
-            val isInMealPlan = mealPlan.any { it.id == recipe?.id }
+            val isFavorite = favorites.any { it.id == recipe.id }
+            val isInMealPlan = mealPlan.any { it.id == recipe.id }
 
             Spacer(modifier = Modifier.height(80.dp))
 
