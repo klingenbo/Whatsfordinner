@@ -46,8 +46,8 @@ import com.example.whatsfordinner.ui.theme.Sage50
 @Composable
 fun FavoritesListScreen(
     savedViewModel: SavedRecipesViewModel,
-    viewModel: RecipesListViewModel,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onRandomClick: () -> Unit
 ) {
 
     val favorites by savedViewModel.favorites.collectAsState()
@@ -61,6 +61,7 @@ fun FavoritesListScreen(
             recipes = favorites,
             onDetailsClicked = onDetailsClicked,
             savedViewModel = savedViewModel,
+            onRandomClick = onRandomClick
         )
     }
 }
@@ -69,12 +70,13 @@ fun FavoritesListScreen(
 fun FavoritesListContent(
     recipes: List<SavedRecipe>,
     onDetailsClicked: (Recipe) -> Unit,
-    savedViewModel: SavedRecipesViewModel
+    savedViewModel: SavedRecipesViewModel,
+    onRandomClick: () -> Unit
 ) {
 
     Scaffold(
         topBar = {
-            TopBar()
+            TopBar(onRandomClick = onRandomClick)
         }
     ) { innerPadding ->
 

@@ -53,7 +53,8 @@ import com.example.whatsfordinner.ui.theme.Sage50
 fun RecipeListScreen(
     viewModel: RecipesListViewModel,
     savedViewModel: SavedRecipesViewModel,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onRandomClick: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -74,6 +75,7 @@ fun RecipeListScreen(
                 recipes = recipes,
                 onDetailsClicked = onDetailsClicked,
                 savedViewModel = savedViewModel,
+                onRandomClick = onRandomClick
             )
         }
     }
@@ -97,12 +99,13 @@ fun RecipeListProgressIndicator() {
 fun RecipeListContent(
     recipes: List<Recipe>,
     savedViewModel: SavedRecipesViewModel,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onRandomClick: () -> Unit
 ) {
 
     Scaffold(
         topBar = {
-            TopBar()
+            TopBar(onRandomClick = onRandomClick)
         }
     ) { innerPadding ->
 

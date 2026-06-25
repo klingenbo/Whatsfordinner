@@ -3,6 +3,7 @@ package com.example.whatsfordinner.components
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,11 +12,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import com.example.whatsfordinner.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
-    onBack: (() -> Unit)? = null
+    onBack: (() -> Unit)? = null,
+    onRandomClick: (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(
         windowInsets = WindowInsets(0, 0, 0, 0),
@@ -31,6 +34,17 @@ fun TopBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
+                    )
+                }
+            }
+        },
+
+        actions = {
+            if (onRandomClick != null) {
+                IconButton(onClick = onRandomClick) {
+                    Icon(
+                        imageVector = Icons.Default.Casino,
+                        contentDescription = "Random recipe"
                     )
                 }
             }

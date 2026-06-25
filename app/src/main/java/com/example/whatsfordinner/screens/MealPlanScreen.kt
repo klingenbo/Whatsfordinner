@@ -45,9 +45,9 @@ import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun MealPlanListScreen(
-    viewModel: RecipesListViewModel,
     savedViewModel: SavedRecipesViewModel,
-    onDetailsClicked: (Recipe) -> Unit
+    onDetailsClicked: (Recipe) -> Unit,
+    onRandomClick: () -> Unit
 ) {
 
     val mealPlan by savedViewModel.mealPlan.collectAsState()
@@ -61,7 +61,8 @@ fun MealPlanListScreen(
             MealPlanListContent(
                 recipes = mealPlan,
                 onDetailsClicked = onDetailsClicked,
-                savedViewModel = savedViewModel
+                savedViewModel = savedViewModel,
+                onRandomClick = onRandomClick
             )
     }
 }
@@ -70,12 +71,13 @@ fun MealPlanListScreen(
 fun MealPlanListContent(
     recipes: List<SavedRecipe>,
     onDetailsClicked: (Recipe) -> Unit,
-    savedViewModel: SavedRecipesViewModel
+    savedViewModel: SavedRecipesViewModel,
+    onRandomClick: () -> Unit
 ) {
 
     Scaffold(
         topBar = {
-            TopBar()
+            TopBar(onRandomClick = onRandomClick)
         }
     ) { innerPadding ->
 
