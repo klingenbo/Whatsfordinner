@@ -93,28 +93,47 @@ class MainActivity : ComponentActivity() {
                                 onDetailsClicked = { recipe ->
                                     viewModel.selectRecipe(recipe)
                                     navController.navigate("recipeDetails")
+                                },
+                                onRandomClick = {
+                                    val random = viewModel.getRandomRecipe()
+                                    if (random != null) {
+                                        viewModel.selectRecipe(random)
+                                        navController.navigate("recipeDetails")
+                                    }
                                 }
                             )
                         }
 
                         composable("favorites") {
                             FavoritesListScreen(
-                                viewModel = viewModel,
                                 savedViewModel = savedViewModel,
                                 onDetailsClicked = { savedRecipe ->
                                     viewModel.selectRecipe(savedRecipe)
                                     navController.navigate("recipeDetails")
+                                },
+                                onRandomClick = {
+                                    val random = savedViewModel.getRandomFavorite()
+                                    if (random != null) {
+                                        viewModel.selectRecipe(random.toRecipe())
+                                        navController.navigate("recipeDetails")
+                                    }
                                 }
                             )
                         }
 
                         composable("meal_plan") {
                             MealPlanListScreen(
-                                viewModel = viewModel,
                                 savedViewModel = savedViewModel,
                                 onDetailsClicked = { savedRecipe ->
                                     viewModel.selectRecipe(savedRecipe)
                                     navController.navigate("recipeDetails")
+                                },
+                                onRandomClick = {
+                                    val random = savedViewModel.getRandomMealPlan()
+                                    if (random != null) {
+                                        viewModel.selectRecipe(random.toRecipe())
+                                        navController.navigate("recipeDetails")
+                                    }
                                 }
                             )
                         }

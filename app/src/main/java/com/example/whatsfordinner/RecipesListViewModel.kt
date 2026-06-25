@@ -33,6 +33,8 @@ class RecipesListViewModel : ViewModel() {
     var selectedRecipe by mutableStateOf<Recipe?>(null)
         private set
 
+    private val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
+
     init {
         fetchRecipes()
     }
@@ -41,6 +43,7 @@ class RecipesListViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val recipes = repository.getRecipes()
+                _recipes.value = recipes
                 _uiState.value = RecipesUiState.Success(recipes)
             } catch (e: Exception) {
                 _uiState.value = RecipesUiState.Error
@@ -50,5 +53,9 @@ class RecipesListViewModel : ViewModel() {
 
     fun selectRecipe(recipe: Recipe) {
         selectedRecipe = recipe
+    }
+
+    fun getRandomRecipe(): Recipe? {
+        return _recipes.value.randomOrNull()
     }
 }

@@ -64,4 +64,12 @@ class SavedRecipesViewModel(application: Application) : AndroidViewModel(applica
             }
         }
     }
+
+    fun getRandomFavorite(): SavedRecipe? {
+        return favorites.value.randomOrNull()
+    }
+
+    fun getRandomMealPlan(): SavedRecipe? {
+        return mealPlan.value.randomOrNull()
+    }
 }
