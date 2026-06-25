@@ -5,7 +5,9 @@ import com.example.whatsfordinner.Recipe
 data class RecipeResponseDto(
     val meals: List<RecipeDto>
 )
+
 data class RecipeDto(
+    val idMeal: String?,
     val strInstructions: String?,
     val strMeal: String?,
     val strMealThumb: String?,
@@ -13,6 +15,7 @@ data class RecipeDto(
 
 fun RecipeDto.toRecipe(): Recipe {
     return Recipe(
+        id = idMeal ?: "",
         name = strMeal ?: "",
         details = strInstructions ?: "",
         image = strMealThumb ?: ""

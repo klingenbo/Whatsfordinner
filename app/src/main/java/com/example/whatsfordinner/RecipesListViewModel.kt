@@ -1,5 +1,8 @@
 package com.example.whatsfordinner
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.whatsfordinner.api.repository.RecipeRepository
@@ -27,8 +30,8 @@ class RecipesListViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<RecipesUiState>(RecipesUiState.Loading)
     val uiState: StateFlow<RecipesUiState> = _uiState
 
-    private val _selectedRecipe = MutableStateFlow<Recipe?>(null)
-    val selectedRecipe = _selectedRecipe
+    var selectedRecipe by mutableStateOf<Recipe?>(null)
+        private set
 
     init {
         fetchRecipes()
@@ -45,7 +48,7 @@ class RecipesListViewModel : ViewModel() {
         }
     }
 
-    fun setSelectedRecipe(recipe: Recipe) {
-        _selectedRecipe.value = recipe
+    fun selectRecipe(recipe: Recipe) {
+        selectedRecipe = recipe
     }
 }

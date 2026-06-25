@@ -18,16 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.whatsfordinner.RecipesListViewModel
+import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.SavedRecipesViewModel
 import com.example.whatsfordinner.components.FavoritesIcon
 import com.example.whatsfordinner.components.MealPlanIcon
@@ -36,9 +33,9 @@ import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun RecipeDetails(
-    viewModel: RecipesListViewModel,
     onBackClicked: () -> Unit,
-    savedViewModel: SavedRecipesViewModel
+    savedViewModel: SavedRecipesViewModel,
+    recipe: Recipe?
 ) {
     Scaffold(
         topBar = {
@@ -48,8 +45,7 @@ fun RecipeDetails(
         }
     ) { innerPadding ->
 
-        val recipe by viewModel.selectedRecipe.collectAsState()
-        val currentRecipe = recipe ?: return@Scaffold
+        val recipe = recipe ?: return@Scaffold
         val favorites by savedViewModel.favorites.collectAsState()
         val mealPlan by savedViewModel.mealPlan.collectAsState()
 
@@ -91,14 +87,18 @@ fun RecipeDetails(
             ) {
                 FavoritesIcon(
                     isFavorite = isFavorite,
-                    onStarClicked = { savedViewModel.toggleFavorite(currentRecipe) }
+                    onStarClicked = {
+                        savedViewModel.toggleFavorite(recipe)
+                    }
                 )
 
                 Spacer(modifier = Modifier.width(40.dp))
 
                 MealPlanIcon(
                     isInMealPlan = isInMealPlan,
-                    onMealPlanClicked = { savedViewModel.toggleMealPlan(currentRecipe) }
+                    onMealPlanClicked = {
+                        savedViewModel.toggleMealPlan(recipe)
+                    }
                 )
             }
 

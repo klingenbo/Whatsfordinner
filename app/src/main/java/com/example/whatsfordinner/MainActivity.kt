@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
                                 viewModel = viewModel,
                                 savedViewModel = savedViewModel,
                                 onDetailsClicked = { recipe ->
-                                    viewModel.setSelectedRecipe(recipe)
+                                    viewModel.selectRecipe(recipe)
                                     navController.navigate("recipeDetails")
                                 }
                             )
@@ -101,8 +101,8 @@ class MainActivity : ComponentActivity() {
                             FavoritesListScreen(
                                 viewModel = viewModel,
                                 savedViewModel = savedViewModel,
-                                onDetailsClicked = { recipe ->
-                                    viewModel.setSelectedRecipe(recipe)
+                                onDetailsClicked = { savedRecipe ->
+                                    viewModel.selectRecipe(savedRecipe)
                                     navController.navigate("recipeDetails")
                                 }
                             )
@@ -112,8 +112,8 @@ class MainActivity : ComponentActivity() {
                             MealPlanListScreen(
                                 viewModel = viewModel,
                                 savedViewModel = savedViewModel,
-                                onDetailsClicked = { recipe ->
-                                    viewModel.setSelectedRecipe(recipe)
+                                onDetailsClicked = { savedRecipe ->
+                                    viewModel.selectRecipe(savedRecipe)
                                     navController.navigate("recipeDetails")
                                 }
                             )
@@ -121,12 +121,12 @@ class MainActivity : ComponentActivity() {
 
                         composable("recipeDetails") {
 
+                            val recipe = viewModel.selectedRecipe
+
                             RecipeDetails(
-                                viewModel = viewModel,
                                 savedViewModel = savedViewModel,
-                                onBackClicked = {
-                                    navController.popBackStack()
-                                }
+                                onBackClicked = { navController.popBackStack() },
+                                recipe = recipe
                             )
                         }
                     }
