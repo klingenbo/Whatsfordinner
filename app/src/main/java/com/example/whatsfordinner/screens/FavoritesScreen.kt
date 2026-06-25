@@ -18,19 +18,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -40,60 +35,39 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
-import com.example.whatsfordinner.RecipesUiState
 import com.example.whatsfordinner.SavedRecipesViewModel
 import com.example.whatsfordinner.components.FavoritesIcon
 import com.example.whatsfordinner.components.MealPlanIcon
 import com.example.whatsfordinner.components.TopBar
+import com.example.whatsfordinner.room.SavedRecipe
+import com.example.whatsfordinner.toRecipe
 import com.example.whatsfordinner.ui.theme.Sage50
 
 @Composable
 fun FavoritesListScreen(
-    viewModel: RecipesListViewModel,
     savedViewModel: SavedRecipesViewModel,
+    viewModel: RecipesListViewModel,
     onDetailsClicked: (Recipe) -> Unit
 ) {
 
-    val uiState by viewModel.uiState.collectAsState()
+    val favorites by savedViewModel.favorites.collectAsState()
 
-    when (uiState) {
-        RecipesUiState.Loading -> FavoritesProgressIndicator()
-        RecipesUiState.Error -> RecipeListError(
-            onRetryClicked = {
-                viewModel.fetchRecipes()
-            }
-        )
-
-        is RecipesUiState.Success -> {
-
-            val recipes = (uiState as RecipesUiState.Success).recipes
-
-            FavoritesListContent(
-                recipes = recipes,
-                onDetailsClicked = onDetailsClicked,
-                savedViewModel = savedViewModel
-            )
+    when {
+        favorites.isEmpty() -> {
+            FavoritesEmptyScreen()
         }
-    }
-}
 
-@Composable
-fun FavoritesProgressIndicator() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator(
-            color = ProgressIndicatorDefaults.circularColor
+        else -> FavoritesListContent(
+            recipes = favorites,
+            onDetailsClicked = onDetailsClicked,
+            savedViewModel = savedViewModel,
         )
     }
 }
 
 @Composable
 fun FavoritesListContent(
-    recipes: List<Recipe>,
+    recipes: List<SavedRecipe>,
     onDetailsClicked: (Recipe) -> Unit,
     savedViewModel: SavedRecipesViewModel
 ) {
@@ -140,7 +114,7 @@ fun FavoritesListContent(
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Sage50)
-                            .padding(20.dp, 20.dp),
+                            .padding(20.dp, 5.dp),
                         shape = RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.background
@@ -157,9 +131,9 @@ fun FavoritesListContent(
                                 model = recipe.image,
                                 contentDescription = recipe.name,
                                 modifier = Modifier
-                                    .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
-                                    .width(40.dp)
-                                    .height(40.dp),
+                                    .padding(start = 20.dp, top = 8.dp, bottom = 8.dp)
+                                    .width(50.dp)
+                                    .height(50.dp),
                                 contentScale = ContentScale.Crop
                             )
 
@@ -185,7 +159,7 @@ fun FavoritesListContent(
                                         overflow = TextOverflow.Ellipsis
                                     )
 
-                                    IconButton(onClick = { onDetailsClicked(recipe) })
+                                    IconButton(onClick = { onDetailsClicked(recipe.toRecipe()) })
                                     {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
@@ -204,14 +178,14 @@ fun FavoritesListContent(
                                 ) {
                                     FavoritesIcon(
                                         isFavorite = isFavorite,
-                                        onStarClicked = { savedViewModel.toggleFavorite(recipe) }
+                                        onStarClicked = { savedViewModel.toggleFavorite(recipe.toRecipe()) }
                                     )
 
                                     Spacer(modifier = Modifier.width(60.dp))
 
                                     MealPlanIcon(
                                         isInMealPlan = isInMealPlan,
-                                        onMealPlanClicked = { savedViewModel.toggleMealPlan(recipe) }
+                                        onMealPlanClicked = { savedViewModel.toggleMealPlan(recipe.toRecipe()) }
                                     )
                                 }
                             }
@@ -219,6 +193,25 @@ fun FavoritesListContent(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun FavoritesEmptyScreen() {
+    Scaffold(
+        topBar = {
+            TopBar()
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("You have no favorites yet!")
         }
     }
 }

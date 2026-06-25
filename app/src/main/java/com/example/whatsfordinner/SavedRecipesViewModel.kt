@@ -10,6 +10,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+fun SavedRecipe.toRecipe() = Recipe(
+    id = id,
+    name = name,
+    image = image,
+    details = details
+)
+
 class SavedRecipesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao = AppDatabase.getInstance(application).savedRecipeDao()
@@ -24,13 +31,15 @@ class SavedRecipesViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             val existing = dao.getById(recipe.id)
             if (existing == null) {
-                dao.upsert(SavedRecipe(
-                    id = recipe.id,
-                    name = recipe.name,
-                    image = recipe.image,
-                    details = recipe.details,
-                    isFavorite = true
-                ))
+                dao.upsert(
+                    SavedRecipe(
+                        id = recipe.id,
+                        name = recipe.name,
+                        image = recipe.image,
+                        details = recipe.details,
+                        isFavorite = true
+                    )
+                )
             } else {
                 dao.upsert(existing.copy(isFavorite = !existing.isFavorite))
             }
@@ -41,13 +50,15 @@ class SavedRecipesViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             val existing = dao.getById(recipe.id)
             if (existing == null) {
-                dao.upsert(SavedRecipe(
-                    id = recipe.id,
-                    name = recipe.name,
-                    image = recipe.image,
-                    details = recipe.details,
-                    isInMealPlan = true
-                ))
+                dao.upsert(
+                    SavedRecipe(
+                        id = recipe.id,
+                        name = recipe.name,
+                        image = recipe.image,
+                        details = recipe.details,
+                        isInMealPlan = true
+                    )
+                )
             } else {
                 dao.upsert(existing.copy(isInMealPlan = !existing.isInMealPlan))
             }
