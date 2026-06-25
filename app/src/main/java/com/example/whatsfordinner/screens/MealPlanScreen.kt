@@ -87,7 +87,6 @@ fun MealPlanListContent(
                 .fillMaxSize()
                 .background(Sage50)
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -101,6 +100,8 @@ fun MealPlanListContent(
                     .padding(top = 20.dp),
                 textAlign = TextAlign.Center
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),

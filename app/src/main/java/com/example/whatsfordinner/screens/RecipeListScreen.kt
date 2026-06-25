@@ -114,7 +114,6 @@ fun RecipeListContent(
                 .fillMaxSize()
                 .background(Sage50)
                 .padding(innerPadding),
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -128,6 +127,8 @@ fun RecipeListContent(
                     .padding(top = 20.dp),
                 textAlign = TextAlign.Center
             )
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
