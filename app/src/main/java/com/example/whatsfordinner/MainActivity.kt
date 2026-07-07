@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.whatsfordinner.components.BottomNavBar
+import com.example.whatsfordinner.dataStore.OnboardingRepository
 import com.example.whatsfordinner.onboarding.Onboarding1
 import com.example.whatsfordinner.onboarding.Onboarding2
 import com.example.whatsfordinner.onboarding.Onboarding3
@@ -23,6 +26,7 @@ import com.example.whatsfordinner.screens.MealPlanListScreen
 import com.example.whatsfordinner.screens.RecipeDetails
 import com.example.whatsfordinner.screens.RecipeListScreen
 import com.example.whatsfordinner.ui.theme.WhatsForDinnerTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +52,10 @@ class MainActivity : ComponentActivity() {
                     "recipeListError"
                 )
 
+                val repository = OnboardingRepository(applicationContext)
+                val hasSeenOnboarding by repository.hasSeenOnboarding.collectAsState(initial = false)
+                val coroutineScope = rememberCoroutineScope()
+
                 Scaffold(
                     bottomBar = {
                         if (showBottomBar) {
@@ -57,33 +65,34 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "recipes"/* "onboarding1"*/,
+                        startDestination = if (hasSeenOnboarding) "recipes" else "onboarding1",
                         modifier = Modifier.padding(innerPadding)
                     ) {
 
-                        /* composable("onboarding1") {
-                             Onboarding1(
-                                 onContinueClicked = {
-                                     navController.navigate("onboarding2")
-                                 }
-                             )
-                         }
+                        composable("onboarding1") {
+                            Onboarding1(
+                                onContinueClicked = {
+                                    navController.navigate("onboarding2")
+                                }
+                            )
+                        }
 
-                         composable("onboarding2") {
-                             Onboarding2(
-                                 onContinueClicked = {
-                                     navController.navigate("onboarding3")
-                                 }
-                             )
-                         }
+                        composable("onboarding2") {
+                            Onboarding2(
+                                onContinueClicked = {
+                                    navController.navigate("onboarding3")
+                                }
+                            )
+                        }
 
-                         composable("onboarding3") {
-                             Onboarding3(
-                                 onGetStartedClicked = {
-                                     navController.navigate("recipes")
-                                 }
-                             )
-                         } */
+                        composable("onboarding3") {
+                            Onboarding3(
+                                onGetStartedClicked = {
+                                    coroutineScope.launch { repository.setHasSeenOnboarding() }
+                                    navController.navigate("recipes")
+                                }
+                            )
+                        }
 
                         composable("recipes") {
 
