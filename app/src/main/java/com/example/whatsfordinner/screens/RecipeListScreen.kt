@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -123,7 +124,7 @@ fun RecipeListContent(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Recipes",
+                text = stringResource(R.string.recipes),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -195,7 +196,7 @@ fun RecipeListContent(
                                     {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "Arrow forward"
+                                            contentDescription = stringResource(R.string.arrow_forward)
                                         )
                                     }
                                 }

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.whatsfordinner.components.OnboardingButton
@@ -37,7 +38,7 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
 
         Image(
             painter = painterResource(R.drawable.favorite_black),
-            contentDescription = "Bookmark",
+            contentDescription = stringResource(R.string.favorite),
             modifier = Modifier
                 .padding(20.dp, 0.dp)
                 .size(150.dp)
@@ -46,7 +47,7 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(80.dp))
 
         Text(
-            text = "Save your favorites",
+            text = stringResource(R.string.onboarding_2_title),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp, 0.dp),
@@ -57,9 +58,7 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(60.dp))
 
         Text(
-            text = "Keep all your favorite recipes\n" +
-                    "in one place and access them\n" +
-                    "whenever you need inspiration",
+            text = stringResource(R.string.onboarding_2_description),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp, 0.dp),
@@ -70,7 +69,7 @@ fun Onboarding2(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(100.dp))
 
         OnboardingButton(
-            text = "Continue",
+            text = stringResource(R.string.button_continue),
             onClick = { onContinueClicked() }
         )
 

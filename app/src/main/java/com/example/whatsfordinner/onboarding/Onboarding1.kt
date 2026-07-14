@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.whatsfordinner.components.OnboardingButton
@@ -37,7 +38,7 @@ fun Onboarding1(onContinueClicked: () -> Unit) {
 
         Image(
             painter = painterResource(R.drawable.menu_book_black),
-            contentDescription = "Cook book",
+            contentDescription = stringResource(R.string.cook_book),
             modifier = Modifier
                 .padding(20.dp, 0.dp)
                 .size(150.dp)
@@ -46,7 +47,7 @@ fun Onboarding1(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(80.dp))
 
         Text(
-            text = "Discover new recipes",
+            text = stringResource(R.string.onboarding_1_title),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp, 0.dp),
@@ -57,9 +58,7 @@ fun Onboarding1(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(60.dp))
 
         Text(
-            text = "Browse hundreds of recipes,\n" +
-                    "save your favorites and plan\n" +
-                    "your meals with ease.",
+            text = stringResource(R.string.onboarding_1_description),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp, 0.dp),
@@ -70,7 +69,7 @@ fun Onboarding1(onContinueClicked: () -> Unit) {
         Spacer(modifier = Modifier.height(100.dp))
 
         OnboardingButton(
-            text = "Continue",
+            text = stringResource(R.string.button_continue),
             onClick = { onContinueClicked() }
         )
 

@@ -21,9 +21,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.SavedRecipesViewModel
 import com.example.whatsfordinner.components.FavoritesIcon
@@ -63,8 +65,8 @@ fun RecipeDetails(
             Spacer(modifier = Modifier.height(80.dp))
 
             AsyncImage(
-                model = recipe?.image ?: "N/A",
-                contentDescription = recipe?.name ?: "No image",
+                model = recipe.image,
+                contentDescription = recipe.name,
                 modifier = Modifier
                     .height(200.dp)
                     .width(200.dp),
@@ -72,7 +74,7 @@ fun RecipeDetails(
             )
 
             Text(
-                text = recipe?.name ?: "No title",
+                text = recipe.name,
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 40.dp)
@@ -103,7 +105,7 @@ fun RecipeDetails(
             }
 
             Text(
-                text = recipe?.details ?: "",
+                text = recipe.details,
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Left,
                 modifier = Modifier.padding(vertical = 30.dp, horizontal = 30.dp)

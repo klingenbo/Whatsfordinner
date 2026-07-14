@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,8 +47,8 @@ fun RecipeListError(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.computer_error),
-                contentDescription = "Computer error",
+                painter = painterResource(R.drawable.loading_error),
+                contentDescription = stringResource(R.string.computer_error),
                 modifier = Modifier
                     .padding(20.dp, 0.dp)
                     .size(300.dp)
@@ -56,7 +57,7 @@ fun RecipeListError(
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
-                text = "Unable to load recipes",
+                text = stringResource(R.string.unable_to_load_recipes),
                 modifier = Modifier
                     .padding(20.dp, 0.dp)
                     .fillMaxWidth(),
@@ -65,7 +66,7 @@ fun RecipeListError(
             )
 
             Text(
-                text = "Check your connection and try again",
+                text = stringResource(R.string.check_your_connection_and_try_again),
                 modifier = Modifier
                     .padding(20.dp, 30.dp)
                     .fillMaxWidth(),
@@ -76,7 +77,7 @@ fun RecipeListError(
             Button(
                 onClick = onRetryClicked
             ) {
-                Text("Try Again")
+                Text(stringResource(R.string.button_try_again))
             }
         }
     }

@@ -29,10 +29,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
 import com.example.whatsfordinner.SavedRecipesViewModel
@@ -95,7 +97,7 @@ fun MealPlanListContent(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Meal Plan",
+                text = stringResource(R.string.meal_plan),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -167,7 +169,7 @@ fun MealPlanListContent(
                                     {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "Arrow forward"
+                                            contentDescription = stringResource(R.string.arrow_forward)
                                         )
                                     }
                                 }
@@ -216,7 +218,7 @@ fun MealPlanEmptyScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("You have no recipes in your meal plan yet!")
+            Text(stringResource(R.string.you_have_no_recipes_in_your_meal_plan_yet))
         }
     }
 }

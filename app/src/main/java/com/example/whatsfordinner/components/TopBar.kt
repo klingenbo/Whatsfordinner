@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,14 +28,14 @@ fun TopBar(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary
         ),
-        title = { Text("What's for dinner?") },
+        title = { Text(stringResource(R.string.app_title)) },
 
         navigationIcon = {
             if (onBack != null) {
                 IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = stringResource(R.string.back)
                     )
                 }
             }
@@ -44,7 +46,7 @@ fun TopBar(
                 IconButton(onClick = onRandomClick) {
                     Icon(
                         imageVector = Icons.Default.Casino,
-                        contentDescription = "Random recipe"
+                        contentDescription = stringResource(R.string.random_recipe)
                     )
                 }
             }

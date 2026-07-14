@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">What\'s for dinner</string>
+    <string name="cook_book">Cook book</string>
+    <string name="onboarding_1_title">Discover new recipes</string>
+    <string name="onboarding_1_description">Browse hundreds of recipes,\n
+                                            save your favorites and plan\n
+                                            your meals with ease.</string>
+    <string name="button_continue">Continue</string>
+    <string name="favorite">Favorite</string>
+    <string name="onboarding_2_title">Save your favorites</string>
+    <string name="onboarding_2_description">Keep all your favorite recipes\n
+                                            in one place and access them\n
+                                            whenever you need inspiration</string>
+    <string name="meal_plan">Meal plan</string>
+    <string name="onboarding_3_title">Never wonder what\'s for dinner</string>
+    <string name="onboarding_3_description">Create a meal plan or let the app\n
+                                            pick a recipe for you when you\n
+                                            can\'t decide</string>
+    <string name="button_get_started">Get Started</string>
+    <string name="recipes">Recipes</string>
+    <string name="favorites">Favorites</string>
+    <string name="app_title">What\'s for dinner?</string>
+    <string name="back">Back</string>
+    <string name="random_recipe">Random recipe</string>
+    <string name="you_have_no_favorites_yet">You have no favorites yet!</string>
+    <string name="arrow_forward">Arrow forward</string>
+    <string name="you_have_no_recipes_in_your_meal_plan_yet">You have no recipes in your meal plan yet!</string>
+    <string name="computer_error">Computer error</string>
+    <string name="unable_to_load_recipes">Unable to load recipes</string>
+    <string name="check_your_connection_and_try_again">Check your connection and try again</string>
+    <string name="button_try_again">Try Again</string>
 </resources>

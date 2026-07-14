@@ -29,10 +29,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.whatsfordinner.R
 import com.example.whatsfordinner.Recipe
 import com.example.whatsfordinner.RecipesListViewModel
 import com.example.whatsfordinner.SavedRecipesViewModel
@@ -94,7 +96,7 @@ fun FavoritesListContent(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Favorites",
+                text = stringResource(R.string.favorites),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -166,7 +168,7 @@ fun FavoritesListContent(
                                     {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                            contentDescription = "Arrow forward"
+                                            contentDescription = stringResource(R.string.arrow_forward)
                                         )
                                     }
                                 }
@@ -214,7 +216,7 @@ fun FavoritesEmptyScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("You have no favorites yet!")
+            Text(stringResource(R.string.you_have_no_favorites_yet))
         }
     }
 }
