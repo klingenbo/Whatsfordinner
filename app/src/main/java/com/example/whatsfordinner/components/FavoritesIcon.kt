@@ -19,7 +19,7 @@ fun FavoritesIcon(
 
     Image(
         painter = painterResource(
-            if (isFavorite) R.drawable.star_filled else R.drawable.favorite_star
+            if (isFavorite) R.drawable.favorite_yellow else R.drawable.favorite_black
         ),
         contentDescription = "Star",
         modifier = Modifier

@@ -31,19 +31,19 @@ enum class Destinations(
     RECIPES(
         "recipes",
         "Recipes",
-        R.drawable.recipe_book,
+        R.drawable.menu_book_black,
         "Recipes"
     ),
     FAVORITES(
         "favorites",
         "Favorites",
-        R.drawable.favorite_star,
+        R.drawable.favorite_black,
         "Favorites"
     ),
     MEAL_PLAN(
         "meal_plan",
         "Meal plan",
-        R.drawable.nutrition,
+        R.drawable.meal_plan_black,
         "Meal plan"
     )
 

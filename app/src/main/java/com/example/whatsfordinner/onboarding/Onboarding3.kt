@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,9 +38,11 @@ fun Onboarding3(
         Spacer(modifier = Modifier.height(40.dp))
 
         Image(
-            painter = painterResource(R.drawable.cooking),
+            painter = painterResource(R.drawable.meal_plan_black),
             contentDescription = "Casserole",
-            modifier = Modifier.padding(20.dp, 0.dp)
+            modifier = Modifier
+                .padding(20.dp, 0.dp)
+                .size(150.dp)
         )
 
         Spacer(modifier = Modifier.height(80.dp))

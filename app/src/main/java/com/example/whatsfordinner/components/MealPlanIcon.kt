@@ -3,7 +3,6 @@ package com.example.whatsfordinner.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,9 +17,9 @@ fun MealPlanIcon(
 ) {
     Image(
         painter = painterResource(
-            if (isInMealPlan) R.drawable.meal_plan_filled else R.drawable.meal_plan
+            if (isInMealPlan) R.drawable.meal_plan_yellow else R.drawable.meal_plan_black
         ),
-        contentDescription = "Outlined meal plan",
+        contentDescription = "Meal plan icon",
         modifier = Modifier
             .width(30.dp)
             .height(30.dp)
